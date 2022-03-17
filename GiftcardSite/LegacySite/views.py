@@ -1,5 +1,6 @@
 import json
 from django.shortcuts import render, redirect
+from django.utils.html import escape
 from django.http import HttpResponse
 from LegacySite.models import User, Product, Card
 from . import extras
@@ -135,7 +136,8 @@ def gift_card_view(request, prod_num=0):
     elif request.method == "POST":
         if prod_num == 0:
             prod_num = 1
-        target_user = request.POST.get('username', None)
+        #from django.utils.html import escape
+        target_user = escape(request.POST.get('username', None))
         if not request.user.is_authenticated:
             return HttpResponse("ERROR: NOT LOGGED IN.")
         if target_user is None:
@@ -228,4 +230,3 @@ def use_card_view(request):
         context['card_list'] = user_cards
         return render(request, "use-card.html", context)
     return HttpResponse("Error 404: Internal Server Error")
-
