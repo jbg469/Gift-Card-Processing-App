@@ -13,7 +13,20 @@ Running specified commands in Part 0: we set up the environment as specified.
   
   As we can see no data is printed in our alert box meaning the cookie data wasn't printed due to the httponly flag that is set to true. With other input such as alert('hello') we do get "hello in the alert box. Httponly prevents scripts from accessing the cookie.
   
-For task 1b we made a script that uses the request libraries. The script works by creating a user session and loging us in. We store the session cookie data and use that for another post request on the site, this time on our vulnerable path, http://127.0.0.1/gift/0. If we find our script text injected the website text then we output "XSS vulnerable" 
+For task 1b we made a script that uses the request libraries. The script works by creating a user session and loging us in. We store the session cookie data and use that for another post request on the site, this time on our vulnerable path, http://127.0.0.1/gift/0. If we find our script text injected the website text then we output "XSS vulnerable" otherwise "Not Vulnerable"
   
   <img width="1440" alt="Screen Shot 2022-03-16 at 8 18 18 PM" src="https://user-images.githubusercontent.com/72175659/158713248-df8a020d-d3d9-4d56-8585-a4e1b07eb68b.png">
+
+ This vulnerability is possible because in views.py we have the following line 
+ ```
+ target_user = request.POST.get('username', None)
+ ```
+ It takes in any input from the vulnerable  field without sanitizing it. To fix this we import escape from Django libraries and escape the target user. This converts the vulnerable input to a safe string by converting all the script elements to HTML elements effectively rendering the exploit we found completely useless. Our script written earlier also verifies no vulnerability is present 
+ ```
+ #from django.utils.html import escape
+ target_user = escape(request.POST.get('username', None))
+ ```
+ <img width="1116" alt="Screen Shot 2022-03-17 at 5 22 04 PM" src="https://user-images.githubusercontent.com/72175659/158900203-cec6b656-3cb8-491b-83a6-96c4d65b6c97.png">
+ <img width="1103" alt="Screen Shot 2022-03-17 at 5 23 45 PM" src="https://user-images.githubusercontent.com/72175659/158900214-57fc8329-112c-4bd6-a997-0215d954dd64.png">
+
 
