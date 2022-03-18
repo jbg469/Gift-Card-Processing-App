@@ -91,8 +91,10 @@ scanning with jbg469-csrf.py shows us vulnerability is mitigated.
 
 <img width="1099" alt="Screen Shot 2022-03-18 at 4 14 19 PM" src="https://user-images.githubusercontent.com/72175659/159077129-5f9803da-103b-4cb0-aef0-a327747b42cd.png">
 
+That enough did not stop our POC exploit from running again, it was that good. We had to edit the setting.py file to include 'django.middleware.csrf.CsrfViewMiddleware'. After running our exploit again we succesffuly mitaged our POC attack. 
 
 
+<img width="1099" alt="Screen Shot 2022-03-18 at 4 34 11 PM" src="https://user-images.githubusercontent.com/72175659/159079721-dcdba0e3-3dec-4e6c-ac25-ef90d42d6ce1.png">
 
 
 
