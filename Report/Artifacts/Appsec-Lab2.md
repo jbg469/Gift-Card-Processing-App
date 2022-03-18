@@ -104,7 +104,7 @@ We just proved that the technique employed by the script is not ideal as the htm
 
 <img width="1091" alt="Screen Shot 2022-03-18 at 6 02 10 PM" src="https://user-images.githubusercontent.com/72175659/159090863-9415bc56-cbfd-45c3-9f74-6d7e2998464b.png">
 
-We download a gift card after purchasing and see the incorrectly parsed field. 
+We download a gift card after purchasing and see the incorrectly parsed signature field. 
 
 
 
