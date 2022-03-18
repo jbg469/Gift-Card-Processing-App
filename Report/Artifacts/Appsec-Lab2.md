@@ -97,7 +97,7 @@ That enough did not stop our POC exploit from running again, it was that good. W
 <img width="1099" alt="Screen Shot 2022-03-18 at 4 34 11 PM" src="https://user-images.githubusercontent.com/72175659/159079721-dcdba0e3-3dec-4e6c-ac25-ef90d42d6ce1.png">
 
 
-
+We just proved that the technique employed by the script is not ideal as the html file can have a csrf token but its not being actually enforced in the django settings.
 
 
 
