@@ -28,5 +28,11 @@ For task 1b we made a script that uses the request libraries. The script works b
  ```
  <img width="1116" alt="Screen Shot 2022-03-17 at 5 22 04 PM" src="https://user-images.githubusercontent.com/72175659/158900203-cec6b656-3cb8-491b-83a6-96c4d65b6c97.png">
  <img width="1103" alt="Screen Shot 2022-03-17 at 5 23 45 PM" src="https://user-images.githubusercontent.com/72175659/158900214-57fc8329-112c-4bd6-a997-0215d954dd64.png">
+ # Cross site request forgery 
+ 
+ First we verify that we can sen giftcard from user on the left to the user on the right
+<img width="1115" alt="Screen Shot 2022-03-17 at 9 01 28 PM" src="https://user-images.githubusercontent.com/72175659/158918268-d5338c41-e077-4068-9b00-cebe891a54c8.png">
+ Successfully give attacker a giftcard
+<img width="1115" alt="Screen Shot 2022-03-17 at 9 02 14 PM" src="https://user-images.githubusercontent.com/72175659/158918270-119af53d-4eb6-49f8-83d4-c868f6ba5aef.png">
 
 
