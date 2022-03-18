@@ -43,6 +43,6 @@ For task 1b we made a script that uses the request libraries. The script works b
 <img width="1115" alt="Screen Shot 2022-03-17 at 9 02 14 PM" src="https://user-images.githubusercontent.com/72175659/158918270-119af53d-4eb6-49f8-83d4-c868f6ba5aef.png">
 
 # POC
- we successfully demonstrate a POC attack that works by exploiting the HTML POST method to submit a form with hidden values. 
+ we successfully demonstrate a POC attack that works by exploiting the HTML POST method to submit a form with hidden values. We simply dropped the CRSF-POC.html file in the target browser. 
  
 <img width="1119" alt="Screen Shot 2022-03-17 at 9 33 30 PM" src="https://user-images.githubusercontent.com/72175659/158921791-69ec6bb5-a2e9-44bf-ba2c-f1438d2ab599.png">
