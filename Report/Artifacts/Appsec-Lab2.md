@@ -79,11 +79,21 @@ python3 -m http.server 8081
  
 <img width="1119" alt="Screen Shot 2022-03-17 at 9 33 30 PM" src="https://user-images.githubusercontent.com/72175659/158921791-69ec6bb5-a2e9-44bf-ba2c-f1438d2ab599.png">
 
-This exploit works because there is not csrf token in the input field. What this token does is essentially give a random hidden input that only that instance of the website will have and recognize on submission. This prevents cross websites forgeries to a large extent as guessing that input would require  time, luck, or both. We made jbrg-csrf to check for "{{ csrf_token() }}". The server outputs gift.html and since it doesn't have this mitigating control we output "CSRF Vulnerable"
+This exploit works because there is not csrf token in the input field. What this token does is essentially give a random hidden input that only that instance of the website will have and recognize on submission. This prevents cross websites forgeries to a large extent as guessing that input would require  time, luck, or both. We made jbrg-csrf.py to check for "csrfmiddlewaretoken" in the gift.html templete . The server prints gift.html and since it doesn't have the mitigating control we output "CSRF Vulnerable".
+<img width="1082" alt="Screen Shot 2022-03-18 at 4 21 54 PM" src="https://user-images.githubusercontent.com/72175659/159077999-e0a9b1c7-f30b-4add-a161-5a5d55fbaa5e.png">
 
-<img width="1099" alt="Screen Shot 2022-03-18 at 3 33 53 PM" src="https://user-images.githubusercontent.com/72175659/159072688-998d6189-a1ec-4a4a-aff0-b4ada363eead.png">
 
-When we add to the input brackets in gift.html 
+When we add {%csrf_ token%} to the input brackets in gift.html we get a hidden field not visible when the website is loaded
+```
+<input type="hidden" name="csrfmiddlewaretoken" value="PScYCWFX0KaFJP5x4nrhvGytLZYmrmSL7Y3wfRHtSblqIuQww6ohzndKo2bsywaS"> 
+```
+scanning with jbg469-csrf.py shows us vulnerability is mitigated.
+
+<img width="1099" alt="Screen Shot 2022-03-18 at 4 14 19 PM" src="https://user-images.githubusercontent.com/72175659/159077129-5f9803da-103b-4cb0-aef0-a327747b42cd.png">
+
+
+
+
 
 
 
