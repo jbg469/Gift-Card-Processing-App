@@ -41,6 +41,7 @@ For task 1b we made a script that uses the request libraries. The script works b
  Successfully give attacker a giftcard
  
 <img width="1115" alt="Screen Shot 2022-03-17 at 9 02 14 PM" src="https://user-images.githubusercontent.com/72175659/158918270-119af53d-4eb6-49f8-83d4-c868f6ba5aef.png">
+static and dynamic analysis of the application were used to discover a potential vulnerability. There is blatant disregard for csrf in gifts.hmtl in the form input and settings.py MIDDLEWARE pre sets.
 
 # POC
  we successfully demonstrate a POC attack that works by exploiting the HTML POST method to submit a form with hidden values. We simply dropped the CRSF-POC.html file in the target browser. CSRF-POC.html
@@ -99,6 +100,11 @@ That enough did not stop our POC exploit from running again, it was that good. W
 
 We just proved that the technique employed by the script is not ideal as the html file can have a csrf token but its not being actually enforced in the django settings.
 
+# SQLi
+
+<img width="1091" alt="Screen Shot 2022-03-18 at 6 02 10 PM" src="https://user-images.githubusercontent.com/72175659/159090863-9415bc56-cbfd-45c3-9f74-6d7e2998464b.png">
+
+We download a gift card after purchasing and see the incorrectly parsed field. 
 
 
 
