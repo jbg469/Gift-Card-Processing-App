@@ -78,12 +78,7 @@ python3 -m http.server 8081
  
  <img width="883" alt="Screen Shot 2022-03-20 at 3 35 51 PM" src="https://user-images.githubusercontent.com/72175659/159183774-5f578c5d-88b8-44b8-9120-34d6200b14e4.png">
 
-
- 
- As expected our exploit was successful.
-
- 
-<img width="1119" alt="Screen Shot 2022-03-17 at 9 33 30 PM" src="https://user-images.githubusercontent.com/72175659/158921791-69ec6bb5-a2e9-44bf-ba2c-f1438d2ab599.png">
+As expected our exploit was successful.
 
 This exploit works because there is not csrf token inside the form  field. What this token does is essentially give a random hidden input that only that instance of the website will have and recognize on submission. This prevents cross websites forgeries to a large extent as guessing that input would require  time, luck, or both. We made jbrg-csrf.py to check for "csrfmiddlewaretoken" in the gift.html templete . The server prints gift.html and since it doesn't have the mitigating control we output "CSRF Vulnerable".
 <img width="1082" alt="Screen Shot 2022-03-18 at 4 21 54 PM" src="https://user-images.githubusercontent.com/72175659/159077999-e0a9b1c7-f30b-4add-a161-5a5d55fbaa5e.png">
