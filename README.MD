@@ -151,7 +151,23 @@ Register two (2) distinct user accounts on the web application, one to serve as 
 
 **Task 2.b:** Using the Python `requests` library, write script that will check for the __potential__ presence of the vulnerability. Due to the nature of CSRF, your approach will be slightly different than that for the XSS vulnerability, and you will check for the presence of a mitigating token.  The script should send a routine HTTP request to the affected web resource, and then it should parse the web server's response for the presence of an HTML element containing `csrfmiddlewaretoken` within it. If the the mitigating control is not present, the script should simply print "Vulnerable to CSRF!" Save the file as `<NetID>-csrf.py` in the root of your repository. Run the script and show its output.
 
-**Task 2.c:** Modify the source code to mitigate the vulnerability identified. Describe the modifications, including specific source code snippets and related filenames affected, and describe why they are effective against the weakness. There are two key changes to make - one related to the transmission of cookies and the other related to the token described in Task 2.b.
+**Task 2.c:** Modify the source code to mitigate the vulnerability identified. Describe the modifications, including specific source code snippets and related filenames affected, and describe why they are effective against the weakness. There are two key changes to make - one related to the transmission of cookies and the other related to the token described in `Task 2b`.
+
+Simply adding the token to a Django template does not activate CSRF mitigation for a request for site-wide, middleware implementation. While the token will be present after modifying the relevant template, the server will not validate it unless you appropriately configure the CSRF middleware for the project. Don't forget to add the middleware setting to make useful the added token, if you are not limiting to view-specific decorators to deploy CSRF.
+
+> **Hint:** If you choose a site-wide settings mitigation, and it is successful, your `<NetID>-xss.py` script will break, because the login form employs a CSRF token that is now validated, since CSRF defenses have been enabled.
+>
+>_If your mitigation only uses a view-specific decorator for CSRF protection, on the other hand, your script may not break, and there is no need to heed this hint_.
+>
+>With the middleware settings technique, though, you will need to go back and update your `<NetID>-xss.py` script from `Task 1b` to overcome these defenses. Since our Python script can read the token from the `login.html` page, you can supply it in previous and future Python tasks that require authentication. You will potentially need to overcome the CSRF challenge token for the login form as well any POST requests in your script. The logic within the sample code provided can be used to tackle each CSRF challenge, separately.
+>
+>Adding the below `csrf_token` value to your programmatic logins and other form submissions will overcome the authentication issues that you have created by properly deploying CSRF defenses. Simply add a POST parameter named `csrfmiddlewaretoken` with the value of `csrf_token` as part of any scripted login steps throughout your Python-related tasks in this lab.
+```python
+import re, requests
+get_token = s.get("http://127.0.0.1/login.html")
+csrf_token = re.search("csrfmiddlewaretoken\" value=\"(.*)?\"", get_token.text).group(1)
+```
+>**Hint:** Use a consistent target host throughout your script. Above, the hostname is `127.0.0.1`. Although `localhost` may resolve to the same address, it is a different host, according to same-origin policy (SOP). So, pick one and use it consistently throughout your script; otherwise, the cookies in your script may not be used as expected.
 
 **Task 2.d** Update `<NetID>-csrf.py` and modify the output to conditionally print "Not vulnerable to CSRF!" if the vulnerability is not successfully exploited.  Run the script and show its output. Explain why the technique employed by the script to determine the state of vulnerability may not be ideal.
 
@@ -170,7 +186,7 @@ The application seems to process gift cards in a way that is vulnerable to SQL i
 
 **Task 3.d** Update `<NetID>-sqli.py` and modify the output to conditionally print "Not vulnerable to SQLi!" if the vulnerability is not successfully exploited.  Run the script and show its output.
 
-## Task 4 (18pts): Command Injection (SQLi)
+## Task 4 (18pts): Command Injection (CMDi)
 ---
 Learn about command injection here: https://portswigger.net/web-security/os-command-injection
 
@@ -182,12 +198,45 @@ The `useCard` resource also appears to be vulnerable to an arbitrary command inj
 ```
 hostname; date; id;
 ``` 
-Include screenshots and ensure to denote the specific field/parameter that was vulnerable, along with the exact attack string used to carry out the attack. Also be sure your screenshot of the command above includes the netcat command that was used to set up the listener for the reverse shell. Save the malicious gift card file as `<NetID>-sqli.gftcrd` in the root of your repository.
+Include screenshots and ensure to denote the specific field/parameter that was vulnerable, along with the exact attack string used to carry out the attack. Also be sure your screenshot of the command above includes the netcat command that was used to set up the listener for the reverse shell. Save the malicious gift card file as `<NetID>-cmdi.gftcrd` in the root of your repository.
 
 _Note._ For this proof-of-concept, you are likely obtaining a reverse shell on the same system as the web server is running. Adjust the IP address accordingly. Additionally, you may need to wrap your injected command as an argument to `bash` (a la `bash -c "echo Command Injection!"`) if you see errors similar to `sh: 1: cannot create . . . Directory nonexistent`, indicating execution within a shell that may not support the command.
 
 **Task 4.b:** Using the Python `requests` library, write script that will check for the presence of the vulnerability. The script should send an HTTP request to the web server with a payload that triggers the vulnerability, and then it should parse the web server's response for any indication that the vulnerability was successfully exploited. If the the vulnerability is present, the script should simply print "Vulnerable to CMDi!" Save the file as `<NetID>-cmdi.py` in the root of your repository. Run the script and show its output.
 > **Remember!** Your script will first need to perform a login task to create a session if the vulnerability is only exploitable while logged in.
+
+Because of the nature of the command injection vulnerability, there is no indication of success returned in the HTML response or otherwise. Your scripted attack should open a `netcat` `subprocess` and send the results of an arbitrary command (e.g. `echo <NetID>`) back to `localhost`. Think about how we obtained a reverse shell in `Task 4b` and in the previous lab, and consider how you might modify that to transmit command output over the network instead of a reverse shell.
+
+You can use this code snippet to set up a `netcat` listener in Python:
+```python
+from subprocess import Popen, PIPE
+ncListener = Popen(['nc', '-nvlp', '8888'], shell=False, stdout=PIPE)
+```
+
+After you programatically execute the command injection attack, you can capture the output of your `netcat` listener in Python via this code snippet:
+```python
+ncOutput = ncListener.communicate(timeout=3)[0].decode('utf-8')
+```
+
+Verify that the command output expected from your attack is present in `ncOutput`. If your script receives the expected command output, then the target should be considered vulnerable. If your script is functionally written and does not receive the expected command output, then your target should not be considered vulnerable.
+
+>**Alternatively**, you may use Python's standard `socket` library to capture the output from your attack, if you wish to make your test more Pythonic and less like your manual attack.
+
+The following code will establish your Python listener:
+```python
+import socket
+from time import sleep
+pyListener = socket.socket()
+pyListener.bind(('127.0.0.1', 8888))
+pyListener.listen()
+```
+After you programatically execute the command injection attack, you can capture the data received by the Python listener via this code snippet:
+```python
+connection, address = pyListener.accept()
+sleep(3) # Probably not necessary, but may be useful
+output = connection.recv(1024).decode()
+```
+Either technique is acceptable for receiving your out-of-band output from your automated command injection attack.
 
 **Task 4.c:** Modify the source code to mitigate the vulnerability identified. Describe the modifications, including specific source code snippets and related filenames affected, and describe why they are effective against the weakness.
 
@@ -219,6 +268,9 @@ The web application's back-end database contains valuable gift card
 data. If a threat actor gains unauthorized access to the gift card data, they can use it to obtain free merchandise, or even pay off their
 tuition with the NYU tuition gift cards. 
 
-**Task 6.a:** Implement database encryption controls to ensure a compromised gift card entry in the database is not immediately usable without decryption or cracking techniques. Using the `django-cryptography` library, encrypt all of the sensitive fields in the `Cards` table. Once complete, take a screenshot of the `Cards` table, showing the encrypted field values. Finally, demonstrate that the application still works by purchasing and using a gift card after the encryption is in place.
+**Task 6.a:** Implement database encryption c
+ontrols to ensure a compromised gift card entry in the database is not immediately usable without decryption or cracking techniques. Using the `django-encrypted-model-fields` library (https://pypi.org/project/django-encrypted-model-fields/) , encrypt all of the sensitive fields in the `LegacySite_card` table via the `Card` model. Once complete, log into the application and purchase a new card.
+
+Using SQLite3 on the command line, query your database table and take a screenshot showing a sample of records, including your recent transaction. What can you observe about the old database entries compared to your recent database entry from your purchase? Explain how your observation affects functionality of the application and might present a security risk and how it might be addressed (no need to actually address it).
 
 **Task 6.b:** Assume that you have recently discovered that the decryption key for your database encryption has been compromised. Document the process for rotating your encryption key, and then show a screenshot of your `Cards` table again, showing the encrypted field values. Describe technically specific precautions you can take in the future to mitigate unauthorized access to your symmetric key.
