@@ -169,5 +169,13 @@ the following payload is in our jbg469-sqli.gftcrd file
 ```
 {"merchant_id": "NYU Apparel Card", "customer_id": "johnbg", "total_value": "10", "records": [{"record_type": "amount_change", "amount_added": 2000, "signature": "'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --"}]}
 ```
+For building our script to detect the vulnerability we follow a similar approach to the previous scanning algorithms
+we login, configure the cookie data, send a post payload, scan server output for a substring indicating SQLi. This time we need to upload a file, set a field to true, and fill in a card name.
+
+The script successfully detects the vulnerability. 
+
+
+<img width="1145" alt="Screen Shot 2022-03-21 at 1 46 08 AM" src="https://user-images.githubusercontent.com/72175659/159211241-36cb6532-6027-4e94-b4e1-324389019c5f.png">
+
 
 
