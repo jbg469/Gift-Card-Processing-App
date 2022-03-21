@@ -124,7 +124,7 @@ We keep changing fields to single quote " ' " to oberve for any anomalities.
 We get key errors when we change the records and signature fields but the most interesting error comes when you cange the "insert cryptographic signature here" field to single quotes . We get an operational error that is unlike other messages we received. We should now try to examine the database contents.
 <img width="897" alt="Screen Shot 2022-03-20 at 7 54 07 PM" src="https://user-images.githubusercontent.com/72175659/159191907-95ff4e46-ae0e-4010-aafb-7c405300376e.png">
 
-Examining the RAW post html we can see some interesting SQL statements 
+Examining the RAW post html we can see some interesting SQL statements not seen on other error messages meaning the website was not using " ' " as a character but as an SQL operator, not good. 
 ```
  <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        # KG: data seems dangerous.</pre></li>
                 
@@ -134,6 +134,14 @@ Examining the RAW post html we can see some interesting SQL statements
                 
                   <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        card_query = Card.objects.raw(&#x27;select id from LegacySite_card where data = \&#x27;%s\&#x27;&#x27; % signature)</pre></li>
                 
-                  <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        user_cards = Card.objects.raw(&#x27;select id, count(*) as count from LegacySite_card where LegacySite_card.user_id = %s&#x27; % str(request.user.id))</pre></li>```
+                  <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        user_cards = Card.objects.raw(&#x27;select id, count(*) as count from LegacySite_card where LegacySite_card.user_id = %s&#x27; % str(request.user.id))</pre></li>
+```
 
+Examining db.sqlite on an online viewer we see some tables of interest 
+
+<img width="1041" alt="Screen Shot 2022-03-20 at 9 56 44 PM" src="https://user-images.githubusercontent.com/72175659/159196606-5c9c1640-1ef9-4605-993e-cc916bb97260.png">
+
+We are being asked for the password dat of the user in the session and the administrator they are found in Legacysite_user
+
+<img width="1043" alt="Screen Shot 2022-03-20 at 9 57 13 PM" src="https://user-images.githubusercontent.com/72175659/159196953-b193f52c-470b-47e6-8063-37d408f41a56.png">
 
