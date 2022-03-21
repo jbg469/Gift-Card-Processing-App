@@ -120,3 +120,20 @@ We keep changing fields to single quote " ' " to oberve for any anomalities.
 <img width="884" alt="Screen Shot 2022-03-20 at 7 51 31 PM" src="https://user-images.githubusercontent.com/72175659/159191835-5db6779e-f57f-4f03-842e-a1b03c35a291.png">
 
 <img width="889" alt="Screen Shot 2022-03-20 at 7 53 21 PM" src="https://user-images.githubusercontent.com/72175659/159191837-961d8ee1-1a6c-43cd-8104-032185b99579.png">
+
+We get key errors when we change the records and signature fields but the most interesting error comes when you cange the "insert cryptographic signature here" field to single quotes . We get an operational error that is unlike other messages we received. We should now try to examine the database contents.
+<img width="897" alt="Screen Shot 2022-03-20 at 7 54 07 PM" src="https://user-images.githubusercontent.com/72175659/159191907-95ff4e46-ae0e-4010-aafb-7c405300376e.png">
+
+Examining the RAW post html we can see some interesting SQL statements 
+```
+ <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        # KG: data seems dangerous.</pre></li>
+                
+                  <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        signature = json.loads(card_data)[&#x27;records&#x27;][0][&#x27;signature&#x27;]</pre></li>
+                
+                  <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        # signatures should be pretty unique, right?</pre></li>
+                
+                  <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        card_query = Card.objects.raw(&#x27;select id from LegacySite_card where data = \&#x27;%s\&#x27;&#x27; % signature)</pre></li>
+                
+                  <li onclick="toggle('pre140642164615040', 'post140642164615040')"><pre>        user_cards = Card.objects.raw(&#x27;select id, count(*) as count from LegacySite_card where LegacySite_card.user_id = %s&#x27; % str(request.user.id))</pre></li>```
+
+
