@@ -106,7 +106,17 @@ We just proved that the technique employed by the script is not ideal as the htm
 
 <img width="1091" alt="Screen Shot 2022-03-18 at 6 02 10 PM" src="https://user-images.githubusercontent.com/72175659/159090863-9415bc56-cbfd-45c3-9f74-6d7e2998464b.png">
 
-We download a gift card after purchasing and see the incorrectly parsed signature field. 
+We download a gift card after purchasing and see all the different fields. We are given that one of the fields is parsed unsafely at use so we can use Burpe Suite and this tip from the given port swigger article.
 
+```
+Submitting the single quote character ' and looking for errors or other anomalies.
+```
 
+We use the proxy function on burpsuite to examine the post command and response to it once we feed our gift card file.
 
+<img width="883" alt="Screen Shot 2022-03-20 at 7 49 04 PM" src="https://user-images.githubusercontent.com/72175659/159191792-918eb14d-4366-4ced-b00c-edf25a58b7d9.png">
+We keep changing fields to single quote " ' " to oberve for any anomalities. 
+<img width="885" alt="Screen Shot 2022-03-20 at 7 50 52 PM" src="https://user-images.githubusercontent.com/72175659/159191821-a2ae0a1f-a866-4ac6-a425-cc64d4c64df7.png">
+<img width="884" alt="Screen Shot 2022-03-20 at 7 51 31 PM" src="https://user-images.githubusercontent.com/72175659/159191835-5db6779e-f57f-4f03-842e-a1b03c35a291.png">
+
+<img width="889" alt="Screen Shot 2022-03-20 at 7 53 21 PM" src="https://user-images.githubusercontent.com/72175659/159191837-961d8ee1-1a6c-43cd-8104-032185b99579.png">
