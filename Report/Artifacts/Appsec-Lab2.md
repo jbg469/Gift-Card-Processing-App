@@ -191,5 +191,5 @@ card_query = Card.objects.raw("SELECT id FROM LegacySite_card WHERE data = '{sig
 ```
 running the sqli detector again shows the vulnerabilty has been mitigated
 
-![Uploading Screen Shot 2022-03-21 at 2.10.40 AM.png…]()
+<img width="1136" alt="Screen Shot 2022-03-21 at 2 10 40 AM" src="https://user-images.githubusercontent.com/72175659/159389697-285ec326-5785-4955-9955-0ca6b6ef3e2f.png">
 
