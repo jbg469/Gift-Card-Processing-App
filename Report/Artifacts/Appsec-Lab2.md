@@ -199,7 +199,8 @@ We are given a faulty JSON structure is not parsed well and can result in a comm
 
 <img width="1143" alt="Screen Shot 2022-03-21 at 11 07 32 PM" src="https://user-images.githubusercontent.com/72175659/159404081-e699b055-475e-40e7-baaf-9797af433b71.png">
 
-on the useCard.html site we see there is an alterante field for naming your card. We will try to feed ```;ls -la;``` command here. 
+on the useCard.html site we see there is an alterante field for naming your card. We will try to feed ```;ls -l;``` command here.
 
+<img width="1136" alt="Screen Shot 2022-03-22 at 12 03 23 AM" src="https://user-images.githubusercontent.com/72175659/159405706-17c4f9f5-7a4d-4102-83d8-cd54f2d9e56c.png">
 
-
+We succeed in injecting a command.
