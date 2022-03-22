@@ -141,7 +141,7 @@ Examining db.sqlite on an online viewer we see some tables of interest
 
 <img width="1041" alt="Screen Shot 2022-03-20 at 9 56 44 PM" src="https://user-images.githubusercontent.com/72175659/159196606-5c9c1640-1ef9-4605-993e-cc916bb97260.png">
 
-We are being asked for the password dat of the user in the session and the administrator they are found in Legacysite_user
+We are being asked for the password data of the user in the session and the administrator, they are found in Legacysite_user.
 
 <img width="1043" alt="Screen Shot 2022-03-20 at 9 57 13 PM" src="https://user-images.githubusercontent.com/72175659/159196953-b193f52c-470b-47e6-8063-37d408f41a56.png">
 
@@ -177,5 +177,19 @@ The script successfully detects the vulnerability.
 
 <img width="1145" alt="Screen Shot 2022-03-21 at 1 46 08 AM" src="https://user-images.githubusercontent.com/72175659/159211241-36cb6532-6027-4e94-b4e1-324389019c5f.png">
 
+To fix the vulnerability we examine the vulnerable card_query variable in views.py:
+```
+#card_query = Card.objects.raw('select id from LegacySite_card where data = \'%s\'' % signature)
 
+```
+This makes it so that the signature field is dynamically apended to the hard coded query instead of parametized
+
+we employ the following fix 
+
+```
+card_query = Card.objects.raw("SELECT id FROM LegacySite_card WHERE data = '{signature}'")
+```
+running the sqli detector again shows the vulnerabilty has been mitigated
+
+![Uploading Screen Shot 2022-03-21 at 2.10.40 AM.png…]()
 
