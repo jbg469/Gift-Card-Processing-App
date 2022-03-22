@@ -193,3 +193,13 @@ running the sqli detector again shows the vulnerabilty has been mitigated
 
 <img width="1136" alt="Screen Shot 2022-03-21 at 2 10 40 AM" src="https://user-images.githubusercontent.com/72175659/159389697-285ec326-5785-4955-9955-0ca6b6ef3e2f.png">
 
+# Command injection 
+
+We are given a faulty JSON structure is not parsed well and can result in a command injection vulnerability. We buy a new gift card and jumble the input.
+
+<img width="1143" alt="Screen Shot 2022-03-21 at 11 07 32 PM" src="https://user-images.githubusercontent.com/72175659/159404081-e699b055-475e-40e7-baaf-9797af433b71.png">
+
+on the useCard.html site we see there is an alterante field for naming your card. We will try to feed ```;ls -la;``` command here. 
+
+
+
