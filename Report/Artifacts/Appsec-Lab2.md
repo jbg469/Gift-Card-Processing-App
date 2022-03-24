@@ -219,8 +219,12 @@ We build on earlier attacks and use the socket method provided in the labs to ac
 <img width="988" alt="Screen Shot 2022-03-24 at 1 15 35 AM" src="https://user-images.githubusercontent.com/72175659/159847118-2943a8b6-a710-4963-ad61-a822df67a34c.png">
 
 line 189 in views.py can be blamed for the vulnerability as it only validates empty input as faulty but fails to mitigate against malicious user input. We can not trust the user to control the kind of parsing done with card_fname as it is sometimes parsed along with system commands. An easy fix is to check the input to see if its alphanumeric with isalnum(). Since a name should only be alphanumeric and not contain malicious characters. 
+Once we validate non valid out put as 
+```
+if card_fname is None or card_fname == '' or card_fname.isalnum()==False:
+```
+cmdi.py no longer detects the vulnerability. 
 
-
-
+<img width="998" alt="Screen Shot 2022-03-24 at 1 28 15 AM" src="https://user-images.githubusercontent.com/72175659/159848601-0b817972-fedf-4b9f-9bbb-c5971751476e.png">
 
 
