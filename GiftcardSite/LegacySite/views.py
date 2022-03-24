@@ -184,7 +184,7 @@ def use_card_view(request):
         # Need to write this to parse card type.
         card_file_data = request.FILES['card_data']
         card_fname = request.POST.get('card_fname', None)
-        if card_fname is None or card_fname == '':
+        if card_fname is None or card_fname == '' or card_fname.isalnum()==False:
             card_file_path = f'/tmp/newcard_{request.user.id}_parser.gftcrd'
         else:
             card_file_path = f'/tmp/{card_fname}_{request.user.id}_parser.gftcrd'
