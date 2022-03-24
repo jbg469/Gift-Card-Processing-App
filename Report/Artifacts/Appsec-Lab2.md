@@ -90,6 +90,9 @@ When we add {%csrf_ token%} to the input brackets in gift.html we get a hidden f
 ```
 scanning with jbg469-csrf.py shows us vulnerability is mitigated.
 
+<img width="975" alt="Screen Shot 2022-03-24 at 1 52 19 PM" src="https://user-images.githubusercontent.com/72175659/159979524-a3247353-3d66-490b-a4aa-c48c7a9be1a4.png">
+
+
 <img width="1099" alt="Screen Shot 2022-03-18 at 4 14 19 PM" src="https://user-images.githubusercontent.com/72175659/159077129-5f9803da-103b-4cb0-aef0-a327747b42cd.png">
 
 That enough did not stop our POC exploit from running again, it was that good. We had to edit the views.py file to include @csrf_protect decorator above the gift views function.
