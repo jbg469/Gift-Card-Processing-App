@@ -1,0 +1,8 @@
+django
+django_extensions           
+cryptography             
+django_cryptography        
+python-decouple            
+django-fernet-fields
+django-encrypted-model-fields
+requests
