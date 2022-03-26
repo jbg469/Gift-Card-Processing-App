@@ -26,7 +26,7 @@ with requests.Session() as s:
     # An authorised request.
     s.get('http://127.0.0.1/useCard.html')
     a_files = {'card_data': open('jbg469-sqli.gftcrd', 'rb')}
-    x = s.post("http://127.0.0.1/useCard.html", data=payload2, files=a_file)
+    x = s.post("http://127.0.0.1/useCard.html", data=payload2, files=a_files)
     fullstring = x.text
     substring = 'memoryview: a bytes-like object is required, not'
     if fullstring.find(substring) != -1:
