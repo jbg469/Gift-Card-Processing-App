@@ -278,6 +278,6 @@ We run the command ```sudo python3 manage.py dumpdata > jso.json``` and we dump 
 <img width="869" alt="Screen Shot 2022-03-27 at 6 25 32 PM" src="https://user-images.githubusercontent.com/72175659/160304662-3c4489b7-2e01-4cec-861a-4dd6abd33bc3.png">
 
 
-We then can change out key to the new key in the settings file. Again for security purposes in production we can store the key in an .env file. 
+We then can change out key to the new key in the settings file. Again for security purposes in production we can store the key in an .env file. We make sure we migrate first. 
 
 
