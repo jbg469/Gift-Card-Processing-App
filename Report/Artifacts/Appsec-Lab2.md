@@ -230,4 +230,14 @@ cmdi.py no longer detects the vulnerability.
 
 <img width="998" alt="Screen Shot 2022-03-24 at 1 28 15 AM" src="https://user-images.githubusercontent.com/72175659/159848601-0b817972-fedf-4b9f-9bbb-c5971751476e.png">
 
+# Encrypting the database
+
+To encrypt the database we first create an encryption key with the following script and store it.
+
+<img width="909" alt="Screen Shot 2022-03-26 at 10 24 22 PM" src="https://user-images.githubusercontent.com/72175659/160263950-a187cb54-6775-439d-88db-3129d04c8f22.png">
+
+we generate ```6i-zh2nupPuGm2f5IMgQZzAmChsZZ3ZnaCCE7R3Plk0=```
+
+we will create a .env file to store this secret key in. 
+
 
