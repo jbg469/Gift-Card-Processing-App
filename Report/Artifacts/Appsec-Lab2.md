@@ -256,12 +256,11 @@ class EncryptedFieldModel(models.Model):
 
 per the django-encrypted-model-fields documentation.
 
-We buy a new gift card and we can see the  fields in the database are encrypted. When we comment out modifications on settings and models to repurchase a new gift card the fields are in plain text again. We encrypt data and fp as with that info unencrypted an attacker who successfully obtains the database information can use any unused card they find with an SQLi. To further mitigate this threat we can encrypt the used field to make it harder for an attacker to guess which giftcards are new or not and store the secret key in the settings file in an .env which makes it inaccessible to attackers making it harder for them to decrypt the data. 
+We buy a new gift card turning the encryption measures off and we can see the  fields in the database are encrypted. When we comment out modifications on settings and models to repurchase a new gift card the fields are in plain text again. The data field has unencrypted information that an attacker who successfully obtains the database can use to access any unused card they find. To mitigate this threat we can encrypt the data field to make it harder for an attacker to guess which giftcards are new or not and store the secret key in the settings file in an .env which makes it inaccessible to attackers making it harder for them to decrypt the data. 
 
+<img width="867" alt="Screen Shot 2022-03-27 at 6 48 07 PM" src="https://user-images.githubusercontent.com/72175659/160304605-30956591-de09-4767-a571-0959842c2a44.png">
 
-<img width="905" alt="Screen Shot 2022-03-27 at 11 09 32 AM" src="https://user-images.githubusercontent.com/72175659/160290168-c0c241d0-b141-4bfb-8273-7ab8d7ed868e.png">
-
-Again the encrypted purchase was done first then we turned off encryption an did a new purchase. 
+unencrypted purchases shown first
 
 
 # Key Rotation 
