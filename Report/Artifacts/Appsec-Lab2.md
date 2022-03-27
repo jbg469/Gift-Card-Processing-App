@@ -238,6 +238,26 @@ To encrypt the database we first create an encryption key with the following scr
 
 we generate ```6i-zh2nupPuGm2f5IMgQZzAmChsZZ3ZnaCCE7R3Plk0=```
 
-we will create a .env file to store this secret key in. 
+<img width="891" alt="Screen Shot 2022-03-27 at 11 55 16 AM" src="https://user-images.githubusercontent.com/72175659/160289968-730f8ead-2901-4cbc-8cac-b824b6038770.png">
+
+<img width="906" alt="Screen Shot 2022-03-27 at 11 53 27 AM" src="https://user-images.githubusercontent.com/72175659/160289973-23a36211-16bb-448a-afce-e3b2fcc422f8.png">
+
+<img width="912" alt="Screen Shot 2022-03-27 at 11 54 02 AM" src="https://user-images.githubusercontent.com/72175659/160290050-14093e25-97c5-4a6b-82f5-64ebda82e9e6.png">
+
+we add some fields and modify some fields to settings.py and models.py per the django-encrypted-model-fields documentation.
+
+We buy a new gift card and we can see the  fields in the database are encrypted. When we comment out modifications on settings and models to repurchase a new gift card the fields are in plain text again. 
 
 
+<img width="905" alt="Screen Shot 2022-03-27 at 11 09 32 AM" src="https://user-images.githubusercontent.com/72175659/160290168-c0c241d0-b141-4bfb-8273-7ab8d7ed868e.png">
+
+Again the encrypted purchase was done first then we turned off encryption an did a new purchase. 
+
+
+# Key Rotation 
+
+we follow the instructions to generate a new key running ```python3 manage.py generate_encryption_key``` in the same directory as our manage.py
+
+<img width="907" alt="Screen Shot 2022-03-27 at 11 56 24 AM" src="https://user-images.githubusercontent.com/72175659/160289997-582c84dd-8fd5-43cf-bb79-120831183b86.png">
+
+this generates Z7eLis2VWVta_h3Uu1UF9NZF9RDV3jrJqzV2_KlItd8= which we will use for our rotation. 
