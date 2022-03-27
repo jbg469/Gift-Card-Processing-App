@@ -238,15 +238,25 @@ To encrypt the database we first create an encryption key with the following scr
 
 we generate ```6i-zh2nupPuGm2f5IMgQZzAmChsZZ3ZnaCCE7R3Plk0=```
 
-<img width="891" alt="Screen Shot 2022-03-27 at 11 55 16 AM" src="https://user-images.githubusercontent.com/72175659/160289968-730f8ead-2901-4cbc-8cac-b824b6038770.png">
+<img width="936" alt="Screen Shot 2022-03-27 at 5 33 06 PM" src="https://user-images.githubusercontent.com/72175659/160302131-77e79573-a923-4bcf-9f4a-b63fdabcb330.png">
 
-<img width="906" alt="Screen Shot 2022-03-27 at 11 53 27 AM" src="https://user-images.githubusercontent.com/72175659/160289973-23a36211-16bb-448a-afce-e3b2fcc422f8.png">
 
-<img width="824" alt="Screen Shot 2022-03-27 at 1 52 41 PM" src="https://user-images.githubusercontent.com/72175659/160294090-ce243e02-ea12-427f-ac0f-5bbb5ca16010.png">
+we add some fields and modify some fields to settings.py and 
 
-we add some fields and modify some fields to settings.py and models.py per the django-encrypted-model-fields documentation.
+models.py 
+```
+from encrypted_model_fields.fields import EncryptedCharField
 
-We buy a new gift card and we can see the  fields in the database are encrypted. When we comment out modifications on settings and models to repurchase a new gift card the fields are in plain text again. We encrypt data and fp as with that info unencrypted an attacker who successfully obtains the database information can use any unused card they find with an SQLi. To further mitigate this threat we can encrypt the used field to make it harder for an attacker to guess which giftcards are new or not and store the secret key in the settings file in an .env which makes it inaccessible to attackers. 
+class EncryptedFieldModel(models.Model):
+    encrypted_char_field = EncryptedCharField(max_length=100)
+    
+  data= EncryptedCharField(max_length=100, unique=True)
+  #data=models.BinaryField(unique=True)  
+```
+
+per the django-encrypted-model-fields documentation.
+
+We buy a new gift card and we can see the  fields in the database are encrypted. When we comment out modifications on settings and models to repurchase a new gift card the fields are in plain text again. We encrypt data and fp as with that info unencrypted an attacker who successfully obtains the database information can use any unused card they find with an SQLi. To further mitigate this threat we can encrypt the used field to make it harder for an attacker to guess which giftcards are new or not and store the secret key in the settings file in an .env which makes it inaccessible to attackers making it harder for them to decrypt the data. 
 
 
 <img width="905" alt="Screen Shot 2022-03-27 at 11 09 32 AM" src="https://user-images.githubusercontent.com/72175659/160290168-c0c241d0-b141-4bfb-8273-7ab8d7ed868e.png">
@@ -261,3 +271,13 @@ we follow the instructions to generate a new key running ```python3 manage.py ge
 <img width="907" alt="Screen Shot 2022-03-27 at 11 56 24 AM" src="https://user-images.githubusercontent.com/72175659/160289997-582c84dd-8fd5-43cf-bb79-120831183b86.png">
 
 this generates Z7eLis2VWVta_h3Uu1UF9NZF9RDV3jrJqzV2_KlItd8= which we will use for our rotation. 
+
+We run the command ```sudo python3 manage.py dumpdata > dbase.json``` and we dump our decrypted to a .json file 
+
+<img width="822" alt="Screen Shot 2022-03-27 at 3 33 42 PM" src="https://user-images.githubusercontent.com/72175659/160297723-96c2fc62-bd97-412c-8319-8831e571d229.png">
+
+<img width="817" alt="Screen Shot 2022-03-27 at 3 34 46 PM" src="https://user-images.githubusercontent.com/72175659/160297720-4fd807ee-5211-4387-907f-ee8aaa75109e.png">
+
+We then can change out key to the new key in the settings file. Again for security purposes in production we can store the key in an .env file. 
+
+
