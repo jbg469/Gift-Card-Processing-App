@@ -246,7 +246,7 @@ we generate ```6i-zh2nupPuGm2f5IMgQZzAmChsZZ3ZnaCCE7R3Plk0=```
 
 we add some fields and modify some fields to settings.py and models.py per the django-encrypted-model-fields documentation.
 
-We buy a new gift card and we can see the  fields in the database are encrypted. When we comment out modifications on settings and models to repurchase a new gift card the fields are in plain text again. We encrypt data and fp as with that info unencrypted an attacker who successfully obtains the database information can use any unused card they find. To further mitigate this threat we can encrypt the used field to make it harder for an attacker to guess which giftcards are new or not. 
+We buy a new gift card and we can see the  fields in the database are encrypted. When we comment out modifications on settings and models to repurchase a new gift card the fields are in plain text again. We encrypt data and fp as with that info unencrypted an attacker who successfully obtains the database information can use any unused card they find with an SQLi. To further mitigate this threat we can encrypt the used field to make it harder for an attacker to guess which giftcards are new or not and store the secret key in the settings file in an .env which makes it inaccessible to attackers. 
 
 
 <img width="905" alt="Screen Shot 2022-03-27 at 11 09 32 AM" src="https://user-images.githubusercontent.com/72175659/160290168-c0c241d0-b141-4bfb-8273-7ab8d7ed868e.png">
