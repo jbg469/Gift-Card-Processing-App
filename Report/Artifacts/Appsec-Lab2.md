@@ -271,11 +271,12 @@ we follow the instructions to generate a new key running ```python3 manage.py ge
 
 this generates Z7eLis2VWVta_h3Uu1UF9NZF9RDV3jrJqzV2_KlItd8= which we will use for our rotation. 
 
-We run the command ```sudo python3 manage.py dumpdata > dbase.json``` and we dump our decrypted to a .json file 
+We run the command ```sudo python3 manage.py dumpdata > jso.json``` and we dump our decrypted to a .json file 
 
-<img width="822" alt="Screen Shot 2022-03-27 at 3 33 42 PM" src="https://user-images.githubusercontent.com/72175659/160297723-96c2fc62-bd97-412c-8319-8831e571d229.png">
+<img width="853" alt="Screen Shot 2022-03-27 at 6 56 06 PM" src="https://user-images.githubusercontent.com/72175659/160304705-b036729a-229d-4550-a35e-cd488a431cbf.png">
 
-<img width="817" alt="Screen Shot 2022-03-27 at 3 34 46 PM" src="https://user-images.githubusercontent.com/72175659/160297720-4fd807ee-5211-4387-907f-ee8aaa75109e.png">
+<img width="869" alt="Screen Shot 2022-03-27 at 6 25 32 PM" src="https://user-images.githubusercontent.com/72175659/160304662-3c4489b7-2e01-4cec-861a-4dd6abd33bc3.png">
+
 
 We then can change out key to the new key in the settings file. Again for security purposes in production we can store the key in an .env file. 
 
