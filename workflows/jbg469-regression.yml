@@ -1,52 +1,50 @@
-name: jbg469 Github Actions
+
+name: JBG469 GITHUB ACTIONS
+
 on:
-    pull_request:
-    push:
-      branches:
-            -master
-            -develop
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Setup Actions
-            uses: actions/checkout@v2
-          - name: setup python
-            uses: actions/setup-python@v2
-            with:
-              python-version: 3.8
-          - name: Try to install dependencies
-            run: |
-               sudo python3 -m pip install --upgrade pip
-               sudo apt-get update
-               sudo apt-get install -y apturl
-               sudo apt-get install python3-brlapi
-               sudo apt-get install -y ubuntu-advantage-tools
-               sudo apt-get install unattended-upgrades
-               sudo apt-get install python3-requests
-               python -m pip install --upgrade pip
-               python -m pip install django requests requests_toolbelt django-encrypted-model-fields
-               sudo pip install -r requirements.txt
-          - name: start server
-            run: |
-              cd ~/AppSec2/GiftCardSite
-              python3 manage.py makemigrations LegacySite
-              python3 manage.py migrate            
-              sudo python3 manage.py runserver 1000 &
-              sleep 10
-          - name: XSS Test
-            run: |
-              sudo chmod u+x jbg469-xss.py
-              sudo python3 jbg469-xss.py
-          - name: Run CSRF Tests
-            run: |
-              sudo chmod u+x jbg-469-csrf.py 
-              sudo python3 jbg469-csrf.py              
-          - name: Run SQLI Tests
-            run: |
-              sudo chmod u+x jbg-469-sqli.py 
-              sudo python3 jbg469-sqli.py         
-          - name: Run CMDI Tests
-            run: |
-              sudo chmod u+x jbg-469-cmdi.py 
-              sudo python3 jbg469-cmdi.py
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install django requests requests_toolbelt django-encrypted-model-fields
+    - name: Run server
+      run: |
+        cd ~/AppSec2/GiftcardSite
+        python3 manage.py makemigrations LegacySite
+        python3 manage.py migrate            
+        sudo python3 manage.py runserver 1000 &
+        sleep 10
+    - name: XSS Test
+      run: |
+        sudo chmod u+x jbg469-xss.py
+        sudo python3 jbg469-xss.py
+    - name: Run CSRF Tests
+      run: |
+        sudo chmod u+x jbg-469-csrf.py 
+        sudo python3 jbg469-csrf.py              
+    - name: Run SQLI Tests
+      run: |
+        sudo chmod u+x jbg-469-sqli.py 
+        sudo python3 jbg469-sqli.py         
+    - name: Run CMDI Tests
+      run: |
+        sudo chmod u+x jbg-469-cmdi.py 
+        sudo python3 jbg469-cmdi.py
