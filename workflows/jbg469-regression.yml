@@ -37,5 +37,3 @@ jobs:
             run: |
               sudo chmod u+x jbg-469-cmdi.py 
               sudo python3 jbg469-cmdi.py
-
-   
