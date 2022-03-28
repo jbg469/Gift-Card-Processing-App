@@ -4,27 +4,32 @@ jobs:
       build:
         runs-on: ubuntu-latest
         steps:
-          - name: Setup actions
-            uses: actions/checkout@v2 
+          - name: checkout repo content
+            uses: actions/checkout@v2 # checkout the repository content to github runner.
           - name: setup python
             uses: actions/setup-python@v2
             with:
               python-version: 3.8 #install the python needed
           - name: Install dependencies
             run: |
-              python -m pip install --upgrade pip
-              python -m pip install django requests requests_toolbelt django-encrypted-model-fields
-          - name: Run server
+               sudo python3 -m pip install --upgrade pip
+               sudo apt-get update
+               sudo apt-get install -y apturl
+               sudo apt-get install python3-brlapi
+               sudo apt-get install -y python3-cupshelpers
+               sudo apt-get install python3-louis
+               sudo apt-get install -y ubuntu-advantage-tools
+               sudo apt-get install unattended-upgrades
+               sudo apt-get install python3-requests
+               sudo pip install -r requirements.txt
+          - name: start server
             run: |
-              cd ~/AppSec2/GiftCardSite
-              python3 manage.py makemigrations LegacySite
-              python3 manage.py migrate
-              sudo python3 manage.py runserver 81 &
+              sudo python3 manage.py runserver 80 &
               sleep 10
-          - name: Run XSS test
+          - name: XSS Test
             run: |
-              sudo chmod u+x jbg469-xss.py
-              sudo python3 jbg469-xss.py
+              sudo chmod u+x sn3106-xss.py
+              sudo python3 sn3106-xss.py
           - name: Run CSRF Tests
             run: |
               sudo chmod u+x jbg-469-csrf.py 
