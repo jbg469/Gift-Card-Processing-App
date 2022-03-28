@@ -34,13 +34,13 @@ jobs:
         sleep 10
     - name: Run CSRF Tests
       run: |
-        sudo python3 jbg469-csrf.py              
+        python3 jbg469-csrf.py              
     - name: Run SQLI Tests
       run: |
-        sudo python3 jbg469-sqli.py         
+        python3 jbg469-sqli.py         
     - name: Run CMDI Tests
       run: |
-        sudo python3 jbg469-cmdi.py
+        python3 jbg469-cmdi.py
     - name: XSS Test
       run: |
-        sudo python3 jbg469-xss.py
+        python3 jbg469-xss.py
