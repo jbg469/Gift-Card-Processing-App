@@ -22,13 +22,13 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install django requests requests_toolbelt django-encrypted-model-fields
+        sudo python -m pip install --upgrade pip
+        sudo python -m pip install django requests requests_toolbelt django-encrypted-model-fields
     - name: Run server
       run: |
         cd GiftcardSite
-        python3 manage.py makemigrations LegacySite
-        python3 manage.py migrate            
+        sudo python3 manage.py makemigrations LegacySite
+        sudo python3 manage.py migrate            
         sudo python3 manage.py runserver 1000 &
         sleep 10
     - name: XSS Test
