@@ -23,21 +23,15 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        sudo python3 -m pip install --upgrade pip
-        sudo apt-get update
-        sudo apt-get install -y apturl
-        sudo apt-get install python3-brlapi
-        sudo apt-get install -y ubuntu-advantage-tools
-        sudo apt-get install unattended-upgrades
-        sudo apt-get install python3-requests
         python -m pip install --upgrade pip
-        python -m pip install django requests requests_toolbelt django-encrypted-model-fields      
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run Tests
+        python -m pip install django requests requests_toolbelt django-encrypted-model-fields
+    - name: Run server
       run: |
-        python manage.py test
-          
+        cd ~/AppSec2/GiftCardSite
+        python3 manage.py makemigrations LegacySite
+        python3 manage.py migrate            
+        sudo python3 manage.py runserver 1000 &
+        sleep 10
     - name: XSS Test
       run: |
         sudo chmod u+x jbg469-xss.py
