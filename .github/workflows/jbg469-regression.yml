@@ -3,8 +3,6 @@ name: JBG469 GITHUB ACTIONS
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -12,20 +10,22 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Run server
-      run: |
-        sudo pip install django
-        sudo python3 manage.py runserver 80 > server.out &
-        sleep 10
-    - name: Run CSRF Tests
-      run: |
-        python3 jbg469-csrf.py              
-    - name: Run SQLI Tests
-      run: |
-        python3 jbg469-sqli.py         
-    - name: Run CMDI Tests
-      run: |
-        python3 jbg469-cmdi.py
-    - name: XSS Test
-      run: |
-        python3 jbg469-xss.py
+      - uses: actions/checkout@v2
+      
+      - name: Run server
+        run: |
+          sudo pip install django
+          sudo python3 manage.py runserver 80 > server.out &
+          sleep 10
+      - name: Run CSRF Tests
+        run: |
+          python3 jbg469-csrf.py              
+      - name: Run SQLI Tests
+        run: |
+          python3 jbg469-sqli.py         
+      - name: Run CMDI Tests
+        run: |
+          python3 jbg469-cmdi.py
+      - name: XSS Test
+        run: |
+          python3 jbg469-xss.py
