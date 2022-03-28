@@ -16,6 +16,8 @@ jobs:
         run: |
           sudo pip install django
           cd GiftcardSite
+          sudo python -m pip install --upgrade pip
+          sudo python -m pip install django requests requests_toolbelt django-encrypted-model-fields          
           sudo python3 manage.py runserver 80 > server.out &
           sleep 10
       - name: Run CSRF Tests
