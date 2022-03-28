@@ -12,8 +12,8 @@ jobs:
               python-version: 3.8 #install the python needed
           - name: Install dependencies
             run: |
-               python -m pip install --upgrade pip
-               python -m pip install django requests requests_toolbelt django-encrypted-model-fields
+              python -m pip install --upgrade pip
+              python -m pip install django requests requests_toolbelt django-encrypted-model-fields
           - name: Run server
             run: |
               cd ~/AppSec2/GiftCardSite
