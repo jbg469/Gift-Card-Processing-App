@@ -229,6 +229,46 @@ if card_fname is None or card_fname == '' or card_fname.isalnum()==False:
 cmdi.py no longer detects the vulnerability. 
 
 <img width="998" alt="Screen Shot 2022-03-24 at 1 28 15 AM" src="https://user-images.githubusercontent.com/72175659/159848601-0b817972-fedf-4b9f-9bbb-c5971751476e.png">
+# Github Actions
+
+Github actions were successful in the .github/worflow remote version. 
+```
+name: JBG469 GITHUB ACTIONS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Run server
+        run: |
+          sudo pip install django
+          cd GiftcardSite
+          sudo python -m pip install --upgrade pip
+          sudo python -m pip install django requests requests_toolbelt django-encrypted-model-fields          
+          sudo python3 manage.py runserver 80 > server.out &
+          sleep 10
+      - name: Run CSRF Tests
+        run: |
+          python3 jbg469-csrf.py              
+      - name: Run SQLI Tests
+        run: |
+          python3 jbg469-sqli.py         
+      - name: Run CMDI Tests
+        run: |
+          python3 jbg469-cmdi.py
+      - name: XSS Test
+        run: |
+          python3 jbg469-xss.py
+
+```
 
 # Encrypting the database
 
