@@ -26,6 +26,7 @@ jobs:
         sudo python -m pip install django requests requests_toolbelt django-encrypted-model-fields
     - name: Run server
       run: |
+        sudo pip install django
         cd GiftcardSite
         sudo python3 manage.py makemigrations LegacySite
         sudo python3 manage.py migrate            
@@ -33,17 +34,13 @@ jobs:
         sleep 10
     - name: XSS Test
       run: |
-        sudo chmod u+x jbg469-xss.py
         sudo python3 jbg469-xss.py
     - name: Run CSRF Tests
       run: |
-        sudo chmod u+x jbg-469-csrf.py 
         sudo python3 jbg469-csrf.py              
     - name: Run SQLI Tests
       run: |
-        sudo chmod u+x jbg-469-sqli.py 
         sudo python3 jbg469-sqli.py         
     - name: Run CMDI Tests
       run: |
-        sudo chmod u+x jbg-469-cmdi.py 
         sudo python3 jbg469-cmdi.py
