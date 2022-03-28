@@ -15,8 +15,6 @@ jobs:
     - name: Run server
       run: |
         sudo pip install django
-        ls
-        cd GiftcardSite
         sudo python3 manage.py runserver 80 > server.out &
         sleep 10
     - name: Run CSRF Tests
