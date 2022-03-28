@@ -282,7 +282,7 @@ We then can change out key to the new key in the settings file. Again for securi
 
 <img width="854" alt="Screen Shot 2022-03-27 at 7 10 42 PM" src="https://user-images.githubusercontent.com/72175659/160305240-1c677115-ab9c-4cde-a9ef-069cee9943f8.png">
 
-As we can see all old and new data is encrypted witht the new key.
+As we can see all old and new data is encrypted with the new key.
 
 <img width="856" alt="Screen Shot 2022-03-27 at 7 14 22 PM" src="https://user-images.githubusercontent.com/72175659/160305376-c8c772ce-d753-457a-bdfb-d2f804c01b6b.png">
 
