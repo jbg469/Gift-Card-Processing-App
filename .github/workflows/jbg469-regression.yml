@@ -9,28 +9,14 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.7, 3.8, 3.9]
+    runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
-      run: |
-        sudo python -m pip install --upgrade pip
-        sudo python -m pip install django requests requests_toolbelt django-encrypted-model-fields
     - name: Run server
       run: |
         sudo pip install django
         cd GiftcardSite
-        sudo python3 manage.py makemigrations LegacySite
-        sudo python3 manage.py migrate            
-        sudo python3 manage.py runserver 1000 &
+        sudo python3 manage.py runserver 80 > server.out &
         sleep 10
     - name: Run CSRF Tests
       run: |
