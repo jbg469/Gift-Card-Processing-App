@@ -229,6 +229,7 @@ if card_fname is None or card_fname == '' or card_fname.isalnum()==False:
 cmdi.py no longer detects the vulnerability. 
 
 <img width="998" alt="Screen Shot 2022-03-24 at 1 28 15 AM" src="https://user-images.githubusercontent.com/72175659/159848601-0b817972-fedf-4b9f-9bbb-c5971751476e.png">
+
 # Github Actions
 
 Github actions were successful in the .github/worflow remote version. 
