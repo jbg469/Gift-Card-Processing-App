@@ -27,7 +27,7 @@ jobs:
         python -m pip install django requests requests_toolbelt django-encrypted-model-fields
     - name: Run server
       run: |
-        #cd ~/AppSec2/GiftcardSite
+        cd ~/AppSec2/GiftcardSite
         python3 manage.py makemigrations LegacySite
         python3 manage.py migrate            
         sudo python3 manage.py runserver 1000 &
