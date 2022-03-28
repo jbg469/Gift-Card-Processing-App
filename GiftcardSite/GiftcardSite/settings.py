@@ -16,6 +16,9 @@ import base64
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+#FIELD_ENCRYPTION_KEY = os.environ.get('FIELD_ENCRYPTION_KEY', '6i-zh2nupPuGm2f5IMgQZzAmChsZZ3ZnaCCE7R3Plk0=')
+FIELD_ENCRYPTION_KEY = os.environ.get('FIELD_ENCRYPTION_KEY', 'Z7eLis2VWVta_h3Uu1UF9NZF9RDV3jrJqzV2_KlItd8=')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -32,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'encrypted_model_fields',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
