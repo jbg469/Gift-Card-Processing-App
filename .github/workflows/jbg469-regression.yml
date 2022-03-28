@@ -32,9 +32,6 @@ jobs:
         sudo python3 manage.py migrate            
         sudo python3 manage.py runserver 1000 &
         sleep 10
-    - name: XSS Test
-      run: |
-        sudo python3 jbg469-xss.py
     - name: Run CSRF Tests
       run: |
         sudo python3 jbg469-csrf.py              
@@ -44,3 +41,6 @@ jobs:
     - name: Run CMDI Tests
       run: |
         sudo python3 jbg469-cmdi.py
+    - name: XSS Test
+      run: |
+        sudo python3 jbg469-xss.py
